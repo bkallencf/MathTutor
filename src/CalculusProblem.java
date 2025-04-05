@@ -72,7 +72,7 @@ public class CalculusProblem extends Problem {
 
         switch(problemType) {
             case "Power Rule" : {
-                PowerRuleProblem powerRule = new PowerRuleProblem(this, createPolynomial());
+                new PowerRuleProblem(this, createPolynomial());
                 break;
             }
         }

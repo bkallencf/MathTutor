@@ -1,9 +1,13 @@
 package src;
+
+import java.util.Arrays;
+
 public class Problem {
     private int problemNumber; //The number of the problem
     private static int numProblems = 0; //The number of problems creater
     private int[] coefficients; //List of coefficients that the problem uses
     private String problem; //The problem that the user is given
+    private String[] answerFields;
     private double[] answer; //The set of answers that a question requires
     private double[] userAnswer; //The set of answers that a user gives
 
@@ -28,11 +32,15 @@ public class Problem {
     }
 
     public int[] getCoefficients() {
-        return coefficients;
+        return this.coefficients;
     }
 
     public String getProblem() {
         return this.problem;
+    }
+
+    public String[] getAnswerFields() {
+        return this.answerFields;
     }
 
     public double[] getAnswer() {
@@ -40,7 +48,7 @@ public class Problem {
     }
 
     public double[] getUserAnswer() {
-        return userAnswer;
+        return this.userAnswer;
     }
 
     //Setters
@@ -60,6 +68,10 @@ public class Problem {
 
     public void setProblem(String problem) {
         this.problem = problem;
+    }
+
+    public void setAnswerFields(String[] answerFields) {
+        this.answerFields = answerFields;
     }
 
     public void setAnswer(double[] answer) {
@@ -86,6 +98,9 @@ public class Problem {
 
     //Compares the user's answer with the actual answer
     public boolean compareAnswers() {
+        Arrays.sort(answer);
+        Arrays.sort(userAnswer);
+
         for (int i = 0; i < this.answer.length; i++) {
             if (Math.round(this.answer[i] * 1000) != Math.round(this.userAnswer[i] * 1000)) {
                 return false;

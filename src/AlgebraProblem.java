@@ -40,12 +40,14 @@ public class AlgebraProblem extends Problem {
                 this.setCoefficients(2);
                 this.setProblem(this.getCoefficients()[0] + "x = " + this.getCoefficients()[1]);
                 this.setAnswer(new double[] {(double)this.getCoefficients()[1] / this.getCoefficients()[0]});
+                this.setAnswerFields(new String[] {"x = "});
                 break;
             }
             case "Intro Algebra 2" : {
                 this.setCoefficients(3);
                 this.setProblem(this.getCoefficients()[0] + "x + " + this.getCoefficients()[1] + " = " + this.getCoefficients()[2]);
                 this.setAnswer(new double[] {(double)(this.getCoefficients()[2] - this.getCoefficients()[1]) / this.getCoefficients()[0]});
+                this.setAnswerFields(new String[] {"x = "});
                 break;
             }
             case "Linear Equation" : {
@@ -55,12 +57,14 @@ public class AlgebraProblem extends Problem {
                 double m = (double)(this.getCoefficients()[3] - this.getCoefficients()[1]) / (this.getCoefficients()[2] - this.getCoefficients()[0]);
                 double b = (double)(this.getCoefficients()[3] - (m * this.getCoefficients()[2]));
                 this.setAnswer(new double[] {m, b});
+                this.setAnswerFields(new String[] {"m = ", "b = "});
                 break;
             }
             case "Rational Equation 1" : {
                 this.setCoefficients(4);
                 this.setProblem((this.getCoefficients()[0] + "/(" + this.getCoefficients()[1] + "x + " + this.getCoefficients()[2] + ") = " + this.getCoefficients()[3]));
                 this.setAnswer(new double[] {(this.getCoefficients()[0] - (double)(this.getCoefficients()[3] * this.getCoefficients()[2])) / (this.getCoefficients()[3] * this.getCoefficients()[1])});
+                this.setAnswerFields(new String[] {"x = "});
                 break;
             }
             case "Quadratic Equation 1" : {
@@ -116,9 +120,11 @@ public class AlgebraProblem extends Problem {
 
         if (determinant == 0) {
             this.setAnswer(new double[] {(-this.getCoefficients()[1]) / (2.0 * this.getCoefficients()[0])});
+            this.setAnswerFields(new String[] {"x = "});
         } else {
             double answer1 = ((-this.getCoefficients()[1] - determinant) / (2.0 * this.getCoefficients()[0]));
             double answer2 = ((-this.getCoefficients()[1] + determinant) / (2.0 * this.getCoefficients()[0]));
+            this.setAnswerFields(new String[] {"x = ", "x = "});
 
             if (answer1 < answer2) {
                 this.setAnswer(new double[] {answer1, answer2});

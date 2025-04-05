@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Problem> p = createProblems(new int[] {0, 0, 10});
+        // ArrayList<Problem> p = createProblems(new int[] {5, 5, 4});
 
-        for (int i = 0; i < p.size(); i++) {
-            for (int j = 0; j < p.get(i).getAnswer().length; j++) {
-                p.get(i).setUserAnswer(j, 5);
-            }
-            System.out.println(p.get(i));
-        }
+        // for (int i = 0; i < p.size(); i++) {
+        //     for (int j = 0; j < p.get(i).getAnswer().length; j++) {
+        //         p.get(i).setUserAnswer(j, 5);
+        //     }
+        //     System.out.println(p.get(i));
+        // }
 
-        // controlTutoringProgram();
+        controlTutoringProgram();
     }
 
     public static void controlTutoringProgram() {
@@ -26,7 +26,15 @@ public class Main {
         for (int i = 0; i < problems.size(); i++) {
             getAnswerInputs(problems.get(i));
         }
-        System.out.println();
+
+        //Compares the answers to each other and returns the wrong ones
+        ArrayList<Problem> wrongProblems = compareWrongAnswers(problems);
+
+        //Creates a String from the wrong problems to pass to the AI
+        String geminiPrompt = convertWrongAnswersToString(wrongProblems);
+
+        //Passes the String to the AI and gets the response for the user
+        JavaToPython.userPrompt = geminiPrompt;
     }
 
     //Determines the number of numQuestions to answer
@@ -90,9 +98,10 @@ public class Main {
 
         problem.displayProblem();
         for (int i = 0; i < problem.getAnswer().length; i++) {
-            System.out.print("Input your answer for this problem (if multiple put them 1 at a time): ");
+            System.out.print(problem.getAnswerFields()[i]);
             problem.setUserAnswer(i, checkDoubleInput(in));
         }
+        System.out.println();
     }
 
     //Checks that the user puts in a double input
@@ -108,4 +117,30 @@ public class Main {
             System.out.print("Please provide a valid double: ");
         }
     }
+
+    //Compares the answers to each other and adds the ones with wrong answers into an ArrayList to eventually pass to the AI
+    public static ArrayList<Problem> compareWrongAnswers(ArrayList<Problem> problems) {
+        ArrayList<Problem> wrongProblems = new ArrayList<>();
+
+        for (int i = 0; i < problems.size(); i++) {
+            if (!problems.get(i).compareAnswers()) {
+                wrongProblems.add(problems.get(i));
+            }
+        }
+
+        return wrongProblems;
+    }
+
+    //Creates a String to pass to the AI
+    public static String convertWrongAnswersToString(ArrayList<Problem> wrongProblems) {
+        String geminiPrompt = "A student is trying to review algebra, geometry, and calculus problems. These are the problems they struggled with." +
+        "Please provide an explanation of how to solve these questions and where they might've gone wrong in their solution.\n";
+
+        for (int i = 0; i < wrongProblems.size(); i++) {
+            geminiPrompt += wrongProblems.get(i).toString();
+        }
+
+        return geminiPrompt;
+    }
+
 }

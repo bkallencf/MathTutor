@@ -63,10 +63,11 @@ public class GeometryProblem extends Problem {
                 question = "An angle of 180\u00B0 is split into 2 angles of " + getCoefficients()[0] + "x + " + getCoefficients()[1] + " and " + getCoefficients()[2] + "x. Find the measure of each angle.\n" +
                         "         /    \n" +
                         "        /     \n" +
-                        "       /      \n" +
+                        "    A  /  B   \n" +
                         "------/-------- ";
                 double angleVariable = (180.0 - getCoefficients()[1]) / (getCoefficients()[0] + getCoefficients()[2]);
                 answer = new double[] {(getCoefficients()[0] * angleVariable) + getCoefficients()[1], (getCoefficients()[2] * angleVariable)};
+                this.setAnswerFields(new String[] {"A = ", "B = "});
                 break;
             }
             case "Vertical Angles" : {
@@ -79,6 +80,7 @@ public class GeometryProblem extends Problem {
                         "     /         \n" +
                         "    /            ";
                 answer = new double[] {180 - this.theta, this.theta, 180 - this.theta};
+                this.setAnswerFields(new String[] {"A = ", "B = ", "C = "});
                 break;
             }
             case "Rectangle Perimeter" : {
@@ -89,6 +91,7 @@ public class GeometryProblem extends Problem {
                         "|             |\n" +
                         "+-------------+  ";
                 answer = new double[] {(2.0 * getCoefficients()[0]) + (2.0 * getCoefficients()[1])};
+                this.setAnswerFields(new String[] {"P = "});
                 break;
             }
             case "Rectangle Area" : {
@@ -99,6 +102,7 @@ public class GeometryProblem extends Problem {
                         "|             |\n" +
                         "+-------------+  ";
                 answer = new double[] {(double)getCoefficients()[0] * getCoefficients()[1]};
+                this.setAnswerFields(new String[] {"A = "});
                 break;
             }
             case "Triangle Area" : {
@@ -111,6 +115,7 @@ public class GeometryProblem extends Problem {
                         " /       \\  \n" +
                         "+---------+    ";
                 answer = new double[] {(0.5 * getCoefficients()[0] * getCoefficients()[1])};
+                this.setAnswerFields(new String[] {"A = "});
                 break;
             }
             case "Circle Circumference" : {
@@ -123,6 +128,7 @@ public class GeometryProblem extends Problem {
                         " *        *  \n" +
                         "    *  *       ";
                 answer = new double[] {(Math.PI * 2 * getCoefficients()[0])};
+                this.setAnswerFields(new String[] {"C = "});
                 break;
             }
             case "Circle Area" : {
@@ -135,6 +141,7 @@ public class GeometryProblem extends Problem {
                         " *        *  \n" +
                         "    *  *       ";
                 answer = new double[] {(Math.PI * (0.5 * getCoefficients()[0]) * (0.5 * getCoefficients()[0]))};
+                this.setAnswerFields(new String[] {"A = "});
                 break;
             }
         }

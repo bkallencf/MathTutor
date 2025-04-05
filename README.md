@@ -20,14 +20,14 @@ Calculus Topics:
     Power Rule: nx^(n - 1)  
 
 
-Areas to Improve:  
-    Answer Comparison  
-    Gathering Answer Inputs  
+Areas to Improve:   
     Passing Problem String to Python  
     Creating Gemini Response  
     Passing Gemini Response to Java  
-    Creating More Template Problems
+    Creating More Template Problems  
     Let User Communicate with Gemini  
+    Better implementation of PowerRuleProblem  
+    Gathering Answer Inputs  
 
     Fractions?
     Negative exponents for power rule?

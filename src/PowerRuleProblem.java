@@ -11,7 +11,7 @@ public class PowerRuleProblem {
         this.polynomial = polynomial;
         this.calculusProblem = calculusProblem;
         this.calculusProblem.setEvaluationPoints(1);
-        this.calculusProblem.setProblem("Find the derivative of " + CalculusProblem.turnPolynomialIntoString(this.polynomial) + " when x = " + this.calculusProblem.getEvaluationPoints().get(0) + ".\n");
+        this.calculusProblem.setProblem("Find the derivative of " + CalculusProblem.turnPolynomialIntoString(this.polynomial) + " when x = " + this.calculusProblem.getEvaluationPoints().get(0) + ".");
         solvePowerRule();
     }
 
@@ -27,22 +27,23 @@ public class PowerRuleProblem {
     //Setters
     public void setPolynomial(int[][] polynomial) {
         this.polynomial = polynomial;
-        this.calculusProblem.setProblem("Find the derivative of " + CalculusProblem.turnPolynomialIntoString(this.polynomial) + " when x = " + this.calculusProblem.getEvaluationPoints().get(0) + ".\n");
+        this.calculusProblem.setProblem("Find the derivative of " + CalculusProblem.turnPolynomialIntoString(this.polynomial) + " when x = " + this.calculusProblem.getEvaluationPoints().get(0) + ".");
         solvePowerRule();
     }
 
-    
+    //Finds the derivative
     public void solvePowerRule() {
         int[][] derivativePolynomial = new int[polynomial.length][2];
+        this.calculusProblem.setAnswerFields(new String[] {"d/dx = "});
 
         //If the polynomial is just a constant with no other terms, it sets the answer to 0
         if (this.polynomial[0][0] == 0) {
-            System.out.println(this.polynomial[polynomial.length - 1][0]);
+            this.calculusProblem.setGeneralEquation("0");
             this.calculusProblem.setAnswer(new double[] {0});
+            return;
         }
 
         for (int i = 0; i < polynomial.length; i++) {
-            System.out.println(this.polynomial[i][0]);
             if (this.polynomial[i][0] == 0) {
                 derivativePolynomial[i][0] = 0;
                 derivativePolynomial[i][1] = 0;
