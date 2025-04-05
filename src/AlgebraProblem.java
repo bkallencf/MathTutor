@@ -4,66 +4,69 @@ public class AlgebraProblem extends Problem {
     public AlgebraProblem() {
         super();
 
-        createAlgebraProblem();
-        calculateAnswer();
+        createAlgebraProblem(determineAlgebraProblemType());
     }
 
-    //Setters
-    @Override
-    public void setCoefficients(int[] coefficients) {
-        super.setCoefficients(coefficients);
-
-        calculateAnswer();
+    public AlgebraProblem(String problemType) {
+        super();
+        
+        createAlgebraProblem(problemType);
     }
 
     //Helper method to create a random problem from a set of problems
-    public void createAlgebraProblem() {
+    public String determineAlgebraProblemType() {
 
         //Template for all the possible questions
         String[] possibleQuestions = {
-            this.getCoefficients()[0] + "x = " + this.getCoefficients()[1],
-            this.getCoefficients()[0] + "x + " + this.getCoefficients()[1] + " = " + this.getCoefficients()[2],
+            "Intro Algebra 1",
+            "Intro Algebra 2",
             "Linear Equation",
-            this.getCoefficients()[0] + "/(" + this.getCoefficients()[1] + "x + " + this.getCoefficients()[2] + ") = " + this.getCoefficients()[3],
-            "Quadratic Equation"
+            "Rational Equation 1",
+            "Quadratic Equation 1"
         };
 
 
         String problem = possibleQuestions[(int)(Math.random() * possibleQuestions.length)];
-        this.setProblem(problem);
+        return problem;
     }
 
     //Helper method to set the solution to the problem (currently hardcoded maybe not later?)
-    public void calculateAnswer() {
-        String question = this.getProblem();
+    public void createAlgebraProblem(String problemType) {
 
-        if (question.equals(this.getCoefficients()[0] + "x = " + this.getCoefficients()[1])) {
-            this.setAnswer(new double[] {(double)this.getCoefficients()[1] / this.getCoefficients()[0]});
+        switch(problemType) {
+            case "Intro Algebra 1" : {
+                this.setCoefficients(2);
+                this.setProblem(this.getCoefficients()[0] + "x = " + this.getCoefficients()[1]);
+                this.setAnswer(new double[] {(double)this.getCoefficients()[1] / this.getCoefficients()[0]});
+                break;
+            }
+            case "Intro Algebra 2" : {
+                this.setCoefficients(3);
+                this.setProblem(this.getCoefficients()[0] + "x + " + this.getCoefficients()[1] + " = " + this.getCoefficients()[2]);
+                this.setAnswer(new double[] {(double)(this.getCoefficients()[2] - this.getCoefficients()[1]) / this.getCoefficients()[0]});
+                break;
+            }
+            case "Linear Equation" : {
+                this.setCoefficients(4);
+                createLinearEquation();
 
-            // System.out.println((double)this.getCoefficients()[1] / this.getCoefficients()[0]);
-
-        } else if (question.equals(this.getCoefficients()[0] + "x + " + this.getCoefficients()[1] + " = " + this.getCoefficients()[2])) {
-            this.setAnswer(new double[] {(double)(this.getCoefficients()[2] - this.getCoefficients()[1]) / this.getCoefficients()[0]});
-
-            // System.out.println((double)(this.getCoefficients()[2] - this.getCoefficients()[1]) / this.getCoefficients()[0]);
-
-        } else if (question.equals("Linear Equation")) {
-            createLinearEquation();
-
-            double m = (double)(this.getCoefficients()[3] - this.getCoefficients()[1]) / (this.getCoefficients()[2] - this.getCoefficients()[0]);
-            double b = (double)(this.getCoefficients()[3] - (m * this.getCoefficients()[2]));
-            this.setAnswer(new double[] {m, b});
-
-            // System.out.println(m + " " + b);
-
-        } else if (question.equals(this.getCoefficients()[0] + "/(" + this.getCoefficients()[1] + "x + " + this.getCoefficients()[2] + ") = " + this.getCoefficients()[3])) {
-            this.setAnswer(new double[] {(this.getCoefficients()[0] - (double)(this.getCoefficients()[3] * this.getCoefficients()[2])) / (this.getCoefficients()[3] * this.getCoefficients()[1])});
-
-            // System.out.println((this.getCoefficients()[0] - (double)(this.getCoefficients()[3] * this.getCoefficients()[2])) / (this.getCoefficients()[3] * this.getCoefficients()[1]));
-
-        } else if (question.equals("Quadratic Equation")) {
-            this.setProblem(createQuadraticEquation());
-            calculateQuadraticAnswer();
+                double m = (double)(this.getCoefficients()[3] - this.getCoefficients()[1]) / (this.getCoefficients()[2] - this.getCoefficients()[0]);
+                double b = (double)(this.getCoefficients()[3] - (m * this.getCoefficients()[2]));
+                this.setAnswer(new double[] {m, b});
+                break;
+            }
+            case "Rational Equation 1" : {
+                this.setCoefficients(4);
+                this.setProblem((this.getCoefficients()[0] + "/(" + this.getCoefficients()[1] + "x + " + this.getCoefficients()[2] + ") = " + this.getCoefficients()[3]));
+                this.setAnswer(new double[] {(this.getCoefficients()[0] - (double)(this.getCoefficients()[3] * this.getCoefficients()[2])) / (this.getCoefficients()[3] * this.getCoefficients()[1])});
+                break;
+            }
+            case "Quadratic Equation 1" : {
+                this.setCoefficients(4);
+                this.setProblem(createQuadraticEquation());
+                calculateQuadraticAnswer();
+                break;
+            }
         }
     }
 
@@ -71,8 +74,8 @@ public class AlgebraProblem extends Problem {
     public void createLinearEquation() {
         while (true) {
             if (getCoefficients()[0] == getCoefficients()[2]) {
-                getCoefficients()[0] = (int)Math.random() * 10 + 1;
-                getCoefficients()[3] = (int)Math.random() * 10 + 1;
+                setCoefficient(0);
+                setCoefficient(2);
                 continue;
             }
 
@@ -86,10 +89,9 @@ public class AlgebraProblem extends Problem {
 
         while (!checkQuadraticEquation()) {
             for (int i = 0; i < this.getCoefficients().length; i++) {
-                this.getCoefficients()[i] = (int)(Math.random() * 10) + 1;
+                setCoefficient(i);
             }
         }
-
 
         return this.getCoefficients()[0] + "x\u00b2 + " + this.getCoefficients()[1] + "x + " + this.getCoefficients()[2] + " = " + this.getCoefficients()[3];
     }

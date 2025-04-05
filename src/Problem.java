@@ -1,23 +1,15 @@
 package src;
 public class Problem {
-    private int problemNumber;
-    private static int numProblems = 0;
-    private int[] coefficients;
-    private String problem;
-    private double[] answer;
-    private double[] userAnswer;
+    private int problemNumber; //The number of the problem
+    private static int numProblems = 0; //The number of problems creater
+    private int[] coefficients; //List of coefficients that the problem uses
+    private String problem; //The problem that the user is given
+    private double[] answer; //The set of answers that a question requires
+    private double[] userAnswer; //The set of answers that a user gives
 
     //Constructors
     public Problem() {
-        this.problem = null;
-        this.answer = null;
-
-        //Creates a random amount of getCoefficients() for the question
-        //TODO set an actual number for the number of getCoefficients() rather than just a placeholder
-        this.coefficients = new int[10];
-        for (int i = 0; i < this.coefficients.length; i++) {
-            this.coefficients[i] = (int)(Math.random() * 10) + 1;
-        }
+        this.problemNumber = ++numProblems;
     }
 
     public Problem(String problem, double[] answer) {
@@ -52,8 +44,18 @@ public class Problem {
     }
 
     //Setters
-    public void setCoefficients(int[] coefficients) {
-        this.coefficients = coefficients;
+    public void setCoefficients(int numCoefficients) {
+
+        //Creates a random amount of getCoefficients() for the question depending on the amount it requires
+        this.coefficients = new int[numCoefficients];
+        for (int i = 0; i < this.coefficients.length; i++) {
+            this.coefficients[i] = (int)(Math.random() * 10) + 1;
+        };
+    }
+
+    //Sets an individual coefficient to change it
+    public void setCoefficient(int coefficientIndex) {
+        this.coefficients[coefficientIndex] = (int)(Math.random() * 10) + 1;
     }
 
     public void setProblem(String problem) {
@@ -62,22 +64,44 @@ public class Problem {
 
     public void setAnswer(double[] answer) {
         this.answer = answer;
+
+        this.userAnswer = new double[answer.length];
     }
 
-    public void setUserAnswer(double[] userAnswer) {
-        this.userAnswer = userAnswer;
+    public void setUserAnswer(int answerIndex, double userAnswer) {
+        this.userAnswer[answerIndex] = userAnswer;
     }
 
     //Other methods
-    public String getSimpleAnswer() {
+    //Returns the answer array as a String; mostly for debugging purposes
+    public String getSimpleAnswer(double[] answerArr) {
         String simpleAnswer = "[";
-        for (int i = 0; i < this.answer.length - 1; i++) {
-            simpleAnswer += this.answer[i] + ", ";
+        for (int i = 0; i < answerArr.length - 1; i++) {
+            simpleAnswer += answerArr[i] + ", ";
         }
-        simpleAnswer += this.answer[this.answer.length - 1] + "]";
+        simpleAnswer += answerArr[answerArr.length - 1] + "]";
 
         return simpleAnswer;
     }
 
-    //TODO compare answer with some tolerance on the doubles to 3 decimal places (rounded)
+    //Compares the user's answer with the actual answer
+    public boolean compareAnswers() {
+        for (int i = 0; i < this.answer.length; i++) {
+            if (Math.round(answer[i] * 1000) != Math.round(userAnswer[i] * 1000)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void displayProblem() {
+        System.out.println("Question #" + this.problemNumber + "\n" + this.problem);
+    }
+
+    @Override
+    public String toString() {
+        return "Question #" + this.problemNumber + "\nProblem: " + this.problem + "\nAnswer: " + getSimpleAnswer(this.answer) + 
+            "\nUser Answer: " + getSimpleAnswer(userAnswer) + "\n";
+    }
 }
