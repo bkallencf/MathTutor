@@ -34,7 +34,7 @@ public class Main {
         String geminiPrompt = convertWrongAnswersToString(wrongProblems);
 
         //Passes the String to the AI and gets the response for the user
-        JavaToPython.userPrompt = geminiPrompt;
+        System.out.println(JavaToPython.getGeminiResponse(geminiPrompt));
     }
 
     //Determines the number of numQuestions to answer
@@ -133,8 +133,8 @@ public class Main {
 
     //Creates a String to pass to the AI
     public static String convertWrongAnswersToString(ArrayList<Problem> wrongProblems) {
-        String geminiPrompt = "A student is trying to review algebra, geometry, and calculus problems. These are the problems they struggled with." +
-        "Please provide an explanation of how to solve these questions and where they might've gone wrong in their solution.\n";
+        String geminiPrompt = "You are tutoring a student who is trying to review algebra, geometry, and calculus problems. These are the problems they struggled with." +
+        "Please provide an explanation of how to solve these questions and where they might've gone wrong in their solution. Be gentle but firm in your explanations\n";
 
         for (int i = 0; i < wrongProblems.size(); i++) {
             geminiPrompt += wrongProblems.get(i).toString();

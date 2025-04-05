@@ -20,12 +20,10 @@ Calculus Topics:
     Power Rule: nx^(n - 1)  
 
 
-Areas to Improve:   
-    Passing Problem String to Python  
-    Creating Gemini Response  
-    Passing Gemini Response to Java  
+Areas to Improve:     
     Creating More Template Problems  
     Let User Communicate with Gemini  
+    Better UI
     Better implementation of PowerRuleProblem  
     Gathering Answer Inputs  
 
@@ -34,3 +32,4 @@ Areas to Improve:
 
 Bugs:  
     Theta in GeometryProblem and superscript characters in CalculusProblem don't display correctly
+    Gemini isn't handling questions which have more than 1 question incorrect
