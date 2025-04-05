@@ -1,12 +1,23 @@
+package src;
 public class Problem {
     private int problemNumber;
     private static int numProblems = 0;
+    private int[] coefficients;
     private String problem;
     private double[] answer;
     private double[] userAnswer;
 
     //Constructors
     public Problem() {
+        this.problem = null;
+        this.answer = null;
+
+        //Creates a random amount of getCoefficients() for the question
+        //TODO set an actual number for the number of getCoefficients() rather than just a placeholder
+        this.coefficients = new int[10];
+        for (int i = 0; i < this.coefficients.length; i++) {
+            this.coefficients[i] = (int)(Math.random() * 10) + 1;
+        }
     }
 
     public Problem(String problem, double[] answer) {
@@ -24,6 +35,10 @@ public class Problem {
         return this.problemNumber;
     }
 
+    public int[] getCoefficients() {
+        return coefficients;
+    }
+
     public String getProblem() {
         return this.problem;
     }
@@ -37,6 +52,10 @@ public class Problem {
     }
 
     //Setters
+    public void setCoefficients(int[] coefficients) {
+        this.coefficients = coefficients;
+    }
+
     public void setProblem(String problem) {
         this.problem = problem;
     }
