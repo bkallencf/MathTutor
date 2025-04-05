@@ -2,18 +2,14 @@ package src;
 public class AlgebraProblem extends Problem {
 
     public AlgebraProblem() {
-        super();
-
         createAlgebraProblem(determineAlgebraProblemType());
     }
 
     public AlgebraProblem(String problemType) {
-        super();
-        
         createAlgebraProblem(problemType);
     }
 
-    //Helper method to create a random problem from a set of problems
+    //Helper method with all the potential types of algebra questions
     public String determineAlgebraProblemType() {
 
         //Template for all the possible questions
@@ -22,7 +18,13 @@ public class AlgebraProblem extends Problem {
             "Intro Algebra 2",
             "Linear Equation",
             "Rational Equation 1",
-            "Quadratic Equation 1"
+            "Quadratic Equation 1",
+            // "Exponential Equation",
+            // "Logarithmic Equation",
+            // "Graphing Form",
+            // "Difference of Squares",
+            // "Quadratic in Form Equations"
+            // "Square Root",
         };
 
 

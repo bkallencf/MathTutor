@@ -4,10 +4,15 @@ public class GeometryProblem extends Problem {
 
     //Constructors
     public GeometryProblem() {
-        super();
+        this.theta = (int)(Math.random() * 89) + 1;
+        
+        createGeometryProblem(determineGeometryProblemType());
+    }
+
+    public GeometryProblem(String problemType) {
         this.theta = (int)(Math.random() * 89) + 1;
 
-        createGeometryProblem(determineGeometryProblemType());
+        createGeometryProblem(problemType);
     }
 
     //Getters
@@ -20,7 +25,7 @@ public class GeometryProblem extends Problem {
         this.theta = theta;
     }
 
-    //Helper method to create geometry problems
+    //Helper method with all the potential types of geometry questions
     public String determineGeometryProblemType() {
         
         //Templates for all the possible questions
@@ -35,10 +40,13 @@ public class GeometryProblem extends Problem {
             "Triangle Area",
             "Circle Circumference",
             "Circle Area",
+            // "Irregular Shape Perimeter",
+            // "Irregular Shape Area",
             // "Sine",
             // "Cosine",
+            // "Pythagorean Theorem",
         };
-        //TODO tangent, arcsine etc., triangle similarity, scaling, rotating, transforms
+        //TODO tangent, arcsine etc., triangle similarity, scaling, rotating, transforms, 3D shapes
 
         String problem = possibleQuestions[(int)(Math.random() * possibleQuestions.length)];
         return problem;

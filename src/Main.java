@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // ArrayList<Problem> p = createProblems(new int[] {10, 10, 0});
+        ArrayList<Problem> p = createProblems(new int[] {0, 0, 10});
 
-        // for (int i = 0; i < p.size(); i++) {
-        //     for (int j = 0; j < p.get(i).getAnswer().length; j++) {
-        //         p.get(i).setUserAnswer(j, 5);
-        //     }
-        //     System.out.println(p.get(i));
-        // }
+        for (int i = 0; i < p.size(); i++) {
+            for (int j = 0; j < p.get(i).getAnswer().length; j++) {
+                p.get(i).setUserAnswer(j, 5);
+            }
+            System.out.println(p.get(i));
+        }
 
-        controlTutoringProgram();
+        // controlTutoringProgram();
     }
 
     public static void controlTutoringProgram() {

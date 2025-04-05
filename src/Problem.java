@@ -74,7 +74,7 @@ public class Problem {
 
     //Other methods
     //Returns the answer array as a String; mostly for debugging purposes
-    public String getSimpleAnswer(double[] answerArr) {
+    public static String getSimpleAnswer(double[] answerArr) {
         String simpleAnswer = "[";
         for (int i = 0; i < answerArr.length - 1; i++) {
             simpleAnswer += answerArr[i] + ", ";
@@ -87,7 +87,7 @@ public class Problem {
     //Compares the user's answer with the actual answer
     public boolean compareAnswers() {
         for (int i = 0; i < this.answer.length; i++) {
-            if (Math.round(answer[i] * 1000) != Math.round(userAnswer[i] * 1000)) {
+            if (Math.round(this.answer[i] * 1000) != Math.round(this.userAnswer[i] * 1000)) {
                 return false;
             }
         }
