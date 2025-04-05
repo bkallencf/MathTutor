@@ -1,5 +1,8 @@
 # MathTutor
-Randomized problems and AI tutoring for algebra, geometry, and calculus.
+By: Benji Kallen
+Creates randomized problems from templates in algebra, geometry, and calculus. Then provides AI tutoring on wrong questions from Gemini.
+
+Topics covered are listed below:
 
 Algebra Topics:  
     Introductory Algebra: ax = b & ax + b = c  
@@ -19,17 +22,15 @@ Geometry Topics:
 Calculus Topics:  
     Power Rule: nx^(n - 1)  
 
-
 Areas to Improve:     
     Creating More Template Problems  
     Let User Communicate with Gemini  
-    Better UI
+    Better UI  
     Better implementation of PowerRuleProblem  
     Gathering Answer Inputs  
-
-    Fractions?
-    Negative exponents for power rule?
+    Fractions?  
+    Negative exponents for power rule?  
+    JSON memory creation and format
 
 Bugs:  
-    Theta in GeometryProblem and superscript characters in CalculusProblem don't display correctly
-    Gemini isn't handling questions which have more than 1 question incorrect
+    Theta in GeometryProblem and superscript characters in CalculusProblem don't display correctly  

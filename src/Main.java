@@ -33,8 +33,12 @@ public class Main {
         //Creates a String from the wrong problems to pass to the AI
         String geminiPrompt = convertWrongAnswersToString(wrongProblems);
 
-        //Passes the String to the AI and gets the response for the user
+        //Passes the String to the AI and gets the response for the user also clears memory log
+        JavaToPython.clearGeminiLog();
         System.out.println(JavaToPython.getGeminiResponse(geminiPrompt));
+
+        //Allows the user to continuously talk to the AI
+        getUserPrompt();
     }
 
     //Determines the number of numQuestions to answer
@@ -120,7 +124,7 @@ public class Main {
 
     //Compares the answers to each other and adds the ones with wrong answers into an ArrayList to eventually pass to the AI
     public static ArrayList<Problem> compareWrongAnswers(ArrayList<Problem> problems) {
-        ArrayList<Problem> wrongProblems = new ArrayList<>();
+        ArrayList<Problem> wrongProblems = new ArrayList<>(0);
 
         for (int i = 0; i < problems.size(); i++) {
             if (!problems.get(i).compareAnswers()) {
@@ -133,14 +137,39 @@ public class Main {
 
     //Creates a String to pass to the AI
     public static String convertWrongAnswersToString(ArrayList<Problem> wrongProblems) {
-        String geminiPrompt = "You are tutoring a student who is trying to review algebra, geometry, and calculus problems. These are the problems they struggled with." +
-        "Please provide an explanation of how to solve these questions and where they might've gone wrong in their solution. Be gentle but firm in your explanations\n";
+        if (wrongProblems.size() == 0) {
+            //TODO pass correct answers instead?
+            return "Write your answer in plain text. You are tutoring a student who is trying to review algebra, geometry, and calculus. Please keep your responses short" +
+            "The user succesfuly answered all the questions correctly. Give them a warm congratulations.";
+        }
+
+        String geminiPrompt = "Write your answer in plain text. You are tutoring a student who is trying to review algebra, geometry, and calculus problems. These are the problems they struggled with." +
+        "Please keep your responses short. Please provide an explanation of how to solve these questions and where they might've gone wrong in their solution." +
+        "Be gentle but firm in your explanations\n";
 
         for (int i = 0; i < wrongProblems.size(); i++) {
             geminiPrompt += wrongProblems.get(i).toString();
         }
 
         return geminiPrompt;
+    }
+
+    //Gets further prompts from the user to talk to the AI
+    public static void getUserPrompt() {
+        Scanner in = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("Your response (type stop to exit): ");
+            String userPrompt = in.nextLine();
+
+            if (userPrompt.equals("stop")) {
+                System.out.println(JavaToPython.getGeminiResponse(userPrompt));
+                break;
+            }
+
+            System.out.println(JavaToPython.getGeminiResponse(userPrompt));
+        }
+        in.close();
     }
 
 }

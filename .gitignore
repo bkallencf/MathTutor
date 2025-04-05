@@ -25,3 +25,6 @@ replay_pid*
 
 # IMPORTANT: DO NOT COMMIT GEMINI API KEY
 *.env
+
+# .json
+*.json

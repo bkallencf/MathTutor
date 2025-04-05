@@ -132,7 +132,7 @@ public class CalculusProblem extends Problem {
             case 4 : return "\u2074";
             case 5 : return "\u2075";
             default : {
-                System.out.println("You're bad at math");
+                System.out.println("Error, power is out of range");
                 return "";
             }
         }
