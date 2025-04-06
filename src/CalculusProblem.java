@@ -55,7 +55,7 @@ public class CalculusProblem extends Problem {
             // "Chain Rule",
             // "Logarithm Derivative",
             // "Exponential Derivative",
-            // "Base e Derivative",
+            "Base e Derivative",
             // "Trig Derivatives",
             // "Maxima/Minima",
             // "Higher Derivatives",
@@ -81,6 +81,15 @@ public class CalculusProblem extends Problem {
             case "Power Rule" : {
                 new PowerRuleProblem(this, createPolynomial());
                 break;
+            }
+            case "Base e Derivative" : {
+                this.setCoefficients(2);
+                int exponentNum = (int)(Math.random() * 5) + 1;
+                String exponentStr = (exponentNum > 1) ? "" + exponentNum : "";
+
+                this.setProblem("Find the derivative of " + this.getCoefficients()[0] + "e^" + exponentStr + "x when x = " + this.getCoefficients()[1] + ".");
+                this.setGeneralEquation(this.getCoefficients()[0] * exponentNum + "e^" + exponentNum + "x");
+                this.setAnswer(new double[] {(double)(this.getCoefficients()[0] * exponentNum) * Math.pow(Math.E, (exponentNum * this.getCoefficients()[1]))});
             }
             case "Integral Power Rule" : {
                 new PowerIntegralProblem(this, createPolynomial());
