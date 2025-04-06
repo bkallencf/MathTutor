@@ -19,6 +19,7 @@ public class GUI {
     private JTextArea geminiFeedback;
     private JLabel generalFeedback;
     private JButton nextButton;
+    private JTextField userResponse;
 
     //Default constructor used in numQuestions
     public GUI(CountDownLatch latch) {
@@ -44,6 +45,7 @@ public class GUI {
         for (int i = 0; i < this.answerFields.length; i++) {
             this.answerFields[i] = new JTextField(20);
             this.answerFields[i].setMaximumSize(new Dimension(400, 30));
+            this.answerFields[i].setFont(new Font("Sans-Serif", Font.PLAIN, 18));
             this.answerFields[i].setAlignmentX(Component.CENTER_ALIGNMENT);
         }
 
@@ -85,7 +87,7 @@ public class GUI {
 
         this.panel = new JPanel();
         this.panel.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
-        this.panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.frame.add(this.panel, BorderLayout.CENTER);
 
         this.questionLabel = new JLabel("Q" + problem.getProblemNumber() + ": " + problem.getProblem());
@@ -107,6 +109,7 @@ public class GUI {
         this.answerFields = new JTextField[this.answerFieldLabels.length];
         for (int i = 0; i < this.answerFields.length; i++) {
             this.answerFields[i] = new JTextField(20);
+            this.answerFields[i].setFont(new Font("Sans-Serif", Font.PLAIN, 18));
             this.answerFields[i].setMaximumSize(new Dimension(400, 30));
             this.answerFields[i].setAlignmentX(Component.CENTER_ALIGNMENT);
         }
@@ -114,7 +117,7 @@ public class GUI {
         for (int i = 0; i < this.answerFields.length; i++) {
             this.panel.add(this.answerFieldLabels[i]);
             this.panel.add(this.answerFields[i]);
-            panel.add(Box.createRigidArea(new Dimension(0, 20)));
+            this.panel.add(Box.createRigidArea(new Dimension(0, 20)));
         }
 
         this.submitButton = new JButton("Submit Answer");
@@ -138,6 +141,7 @@ public class GUI {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30)); // padding to match
         this.nextButton = new JButton("Next");
+        this.nextButton.setEnabled(false);
         bottomPanel.add(this.nextButton);
         this.frame.add(bottomPanel, BorderLayout.SOUTH);
         
@@ -147,6 +151,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getGeminiFeedback();
+                talkToGemini();
             }
         });
 
@@ -172,6 +177,10 @@ public class GUI {
             }
 
             this.submitButton.setEnabled(false);
+            this.nextButton.setEnabled(true);
+            for (int i = 0; i < this.answerFields.length; i++) {
+                this.answerFields[i].setEditable(false);
+            }
 
             String geminiPrompt = convertWrongAnswerToString(this.currentProblem);
             geminiFeedback.setText(JavaToPython.getGeminiResponse(geminiPrompt));
@@ -211,6 +220,54 @@ public class GUI {
         }
         catch (NumberFormatException e) {
             this.generalFeedback.setText("Please enter a valid number.");
+        }
+    }
+
+    //Allows the user to talk to gemini
+    private void talkToGemini() {
+        if (this.userResponse == null) {
+            this.userResponse = new JTextField(20);
+            this.userResponse.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
+            this.userResponse.setMaximumSize(new Dimension(400, 30));
+            this.userResponse.setAlignmentX(Component.CENTER_ALIGNMENT);
+            this.panel.add(Box.createRigidArea(new Dimension(400, 30)));
+            this.panel.add(this.userResponse);
+
+            //Updates the panel
+            this.panel.revalidate();
+            this.panel.repaint();
+        }
+        this.geminiFeedback.append("\n\nUse the box below and click the submit button to ask Gemini questions.");
+        this.submitButton.setEnabled(true);
+
+        //Removes the old event listener for submitButton
+        for (ActionListener al : this.submitButton.getActionListeners()) {
+            this.submitButton.removeActionListener(al);
+        }
+
+        //Replaces the event listener with one to talk to Gemini
+        this.submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                passUserPrompt();
+            }
+        });
+    }
+
+    //Passes the user's prompt to Gemini and gets one back
+    private void passUserPrompt() {
+        try {
+            String userPrompt = this.userResponse.getText();
+
+            this.submitButton.setEnabled(false);
+            this.userResponse.setText("");
+            
+            geminiFeedback.setText(JavaToPython.getGeminiResponse(userPrompt));
+            this.submitButton.setEnabled(true);
+
+        }
+        catch (Exception e) {
+            geminiFeedback.setText("Invalid prompt.");
         }
     }
 }
