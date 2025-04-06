@@ -18,8 +18,7 @@ public class GUI {
     private JButton submitButton;
     private JTextArea geminiFeedback;
     private JLabel generalFeedback;
-
-    private CountDownLatch latch;
+    private JButton nextButton;
 
     //Default constructor used in numQuestions
     public GUI(CountDownLatch latch) {
@@ -70,22 +69,24 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 getNumQuestions();
                 latch.countDown();
+                frame.dispose();
             }
         });
     }
     
     //Constructor used for creating a GUI for all problems
-    public GUI(Problem problem) {
+    public GUI(Problem problem, CountDownLatch latch) {
         this.currentProblem = problem;
 
         this.frame = new JFrame("Math Tutor Program");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setSize(1200, 800);
+        this.frame.setLayout(new BorderLayout());
 
         this.panel = new JPanel();
         this.panel.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
         this.panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        this.frame.add(this.panel);
+        this.frame.add(this.panel, BorderLayout.CENTER);
 
         this.questionLabel = new JLabel("Q" + problem.getProblemNumber() + ": " + problem.getProblem());
         this.questionLabel.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
@@ -123,17 +124,22 @@ public class GUI {
         this.panel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         this.geminiFeedback = new JTextArea(10, 50);
-        geminiFeedback.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
-        geminiFeedback.setLineWrap(true);
-        geminiFeedback.setWrapStyleWord(true);
-        geminiFeedback.setEditable(false);
+        this.geminiFeedback.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
+        this.geminiFeedback.setLineWrap(true);
+        this.geminiFeedback.setWrapStyleWord(true);
+        this.geminiFeedback.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(geminiFeedback);
         scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setPreferredSize(new Dimension(600, 200));
-
         this.panel.add(scrollPane);
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30)); // padding to match
+        this.nextButton = new JButton("Next");
+        bottomPanel.add(this.nextButton);
+        this.frame.add(bottomPanel, BorderLayout.SOUTH);
         
         this.frame.setVisible(true);
 
@@ -143,27 +149,36 @@ public class GUI {
                 getGeminiFeedback();
             }
         });
+
+        this.nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                latch.countDown();
+                frame.dispose();
+            }
+        });
     }
 
-    //Gets feedback on the questino from Gemini
+    //Getters
+    public int[] getValues() {
+        return values;
+    }
+
+    //Gets feedback on the question from Gemini
     private void getGeminiFeedback() {
         try {
             for (int i = 0; i < this.currentProblem.getAnswer().length; i++) {
                 this.currentProblem.getUserAnswer()[i] = Double.parseDouble(this.answerFields[i].getText());
             }
 
+            this.submitButton.setEnabled(false);
+
             String geminiPrompt = convertWrongAnswerToString(this.currentProblem);
-            JavaToPython.clearGeminiLog();
             geminiFeedback.setText(JavaToPython.getGeminiResponse(geminiPrompt));
         }
         catch (NumberFormatException e) {
             geminiFeedback.setText("Please enter a valid number.");
         }
-    }
-
-    //Getters
-    public int[] getValues() {
-        return values;
     }
 
     //Determines which response to give to Gemini based on whether the user gave a correct or incorrect answer to the problem
@@ -183,6 +198,11 @@ public class GUI {
         try {
             int[] numQuestions = new int[3];
             for (int i = 0; i < this.answerFields.length; i++) {
+                if (answerFields[i].getText().isEmpty()) {
+                    numQuestions[i] = 0;
+                    continue;
+                }
+
                 numQuestions[i] = Integer.parseInt(this.answerFields[i].getText());
             }
 

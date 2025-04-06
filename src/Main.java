@@ -7,7 +7,7 @@ import java.util.concurrent.CountDownLatch;
 public class Main {
     public static void main(String[] args) {
 
-        // controlTutoringProgram();
+        // controlTutoringProgram(); Mostly Obsolete
 
         controlTutoringProgramGUI();
 
@@ -29,14 +29,20 @@ public class Main {
         int[] numQuestions = questionGUI.getValues();
         ArrayList<Problem> problems = createProblems(numQuestions);
 
-        // //Displays each problem and gets the user's answers
-        // GUI[] guiProblems = new GUI[problems.size()];
-        // for (int i = 0; i < problems.size(); i++) {
-        //     guiProblems[i] = new GUI(problems.get(i));
+        //Displays each problem and gets the user's answers
+        GUI[] guiProblems = new GUI[problems.size()];
+        JavaToPython.clearGeminiLog();
+        for (int i = 0; i < problems.size(); i++) {
+            latch = new CountDownLatch(1);
+            guiProblems[i] = new GUI(problems.get(i), latch);
             
-        // }
 
-        GUI gui = new GUI(problems.get(0));
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void controlTutoringProgram() {
@@ -48,15 +54,6 @@ public class Main {
         for (int i = 0; i < problems.size(); i++) {
             getAnswerInputs(problems.get(i));
         }
-
-        // ArrayList<Problem> problems = createProblems(new int[] {20, 20, 20});
-
-        // for (int i = 0; i < problems.size(); i++) {
-        //     for (int j = 0; j < problems.get(i).getAnswer().length; j++) {
-        //         problems.get(i).setUserAnswer(j, 5);
-        //     }
-        //     System.out.println(problems.get(i));
-        // }
 
         //Compares the answers to each other and returns the wrong ones
         ArrayList<Problem> wrongProblems = compareWrongAnswers(problems);
@@ -126,7 +123,6 @@ public class Main {
         return questions;
     }
 
-    //TODO heavily improve how answers are gotten, maybe create an Answer class?
     //Displays the problem to the user and gets their answer to set to the Problem
     public static void getAnswerInputs(Problem problem) {
         Scanner in = new Scanner(System.in);

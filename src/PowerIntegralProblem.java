@@ -14,8 +14,8 @@ public class PowerIntegralProblem {
         this.polynomial = polynomial;
         this.calculusProblem = calculusProblem;
         verifyBounds();
-        this.calculusProblem.setProblem("Find the integral of " + CalculusProblem.turnPolynomialIntoString(this.polynomial) + 
-            " on [" + this.calculusProblem.getEvaluationPoints().get(0) + "," + this.calculusProblem.getEvaluationPoints().get(1) + "].");
+        this.calculusProblem.setProblem("Find the integral of \u222B(" + CalculusProblem.turnPolynomialIntoString(this.polynomial) + 
+            ")dx on [" + this.calculusProblem.getEvaluationPoints().get(0) + "," + this.calculusProblem.getEvaluationPoints().get(1) + "].");
         solvePowerIntegral();
     }
 
@@ -31,15 +31,15 @@ public class PowerIntegralProblem {
     //Setters
     public void setPolynomial(int[][] polynomial) {
         this.polynomial = polynomial;
-        this.calculusProblem.setProblem("Find the integral of " + CalculusProblem.turnPolynomialIntoString(this.polynomial) + 
-            " on [" + this.calculusProblem.getEvaluationPoints().get(0) + "," + this.calculusProblem.getEvaluationPoints().get(1) + "].");
+        this.calculusProblem.setProblem("Find the integral of \u222B(" + CalculusProblem.turnPolynomialIntoString(this.polynomial) + 
+            ")dx on [" + this.calculusProblem.getEvaluationPoints().get(0) + "," + this.calculusProblem.getEvaluationPoints().get(1) + "].");
         solvePowerIntegral();
     }
 
     //Finds the integral
     public void solvePowerIntegral() {
         double[][] integralPolynomial = new double[polynomial.length][2];
-        this.calculusProblem.setAnswerFields(new String[] {"int = "});
+        this.calculusProblem.setAnswerFields(new String[] {"\u222B = "});
 
         //If the polynomial is just a zero with no other terms, it sets the answer to 0
         if (this.polynomial[polynomial.length - 1][1] == 0) {

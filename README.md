@@ -21,16 +21,17 @@ Geometry Topics:
 
 Calculus Topics:  
     Power Rule: nx^(n - 1)  
-    Antiderivative Power Rule: x^(n + 1)/(n + 1)
+    Antiderivative Power Rule: x^(n + 1)/(n + 1)  
 
 Areas to Improve:  
-    Creating More Template Problems   
+    Creating More Template Problems  
     Better UI  
+    Ability to Communicate with AI After the Question
+    Feedback Summary of Wrong Questions  
+    Look at Previous Questions
     Better implementation of PowerRuleProblem  
-    Gathering Answer Inputs  
     Fractions?  
-    Negative exponents for power rule?  
-    JSON memory creation and format  
+    Negative exponents for Power Rule?  
+    JSON Memory Creation and Format  
 
 Bugs:  
-    Theta in GeometryProblem and superscript characters in CalculusProblem don't display correctly  

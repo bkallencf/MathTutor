@@ -60,86 +60,49 @@ public class GeometryProblem extends Problem {
         switch (problemType) {
             case "Straight Angles" : {
                 this.setCoefficients(3);
-                question = "An angle of 180\u00B0 is split into 2 angles of " + getCoefficients()[0] + "x + " + getCoefficients()[1] + " and " + getCoefficients()[2] + "x. Find the measure of each angle.\n" +
-                        "         /    \n" +
-                        "        /     \n" +
-                        "    A  /  B   \n" +
-                        "------/-------- ";
+                question = "An angle of 180\u00B0 is split into 2 angles of " + getCoefficients()[0] + "x + " + getCoefficients()[1] + " and " + getCoefficients()[2] + "x. Find the measure of each angle.";
                 double angleVariable = (180.0 - getCoefficients()[1]) / (getCoefficients()[0] + getCoefficients()[2]);
                 answer = new double[] {(getCoefficients()[0] * angleVariable) + getCoefficients()[1], (getCoefficients()[2] * angleVariable)};
                 this.setAnswerFields(new String[] {"A = ", "B = "});
                 break;
             }
             case "Vertical Angles" : {
-                question = "Two lines intersect at an angle of x = " + this.theta + "\u00B0. Find the value of A, B, and C.\n" +
-                        "          /    \n" +
-                        "         /     \n" +
-                        "   A    /  x   \n" +
-                        "-------/-------\n" +
-                        "   B  /    C   \n" +
-                        "     /         \n" +
-                        "    /            ";
+                question = "Two lines intersect at an angle of x = " + this.theta + "\u00B0. Find the value of A, B, and C.";
                 answer = new double[] {180 - this.theta, this.theta, 180 - this.theta};
                 this.setAnswerFields(new String[] {"A = ", "B = ", "C = "});
                 break;
             }
             case "Rectangle Perimeter" : {
                 this.setCoefficients(2);
-                question = "Find the perimeter of a rectangle with a width of " + getCoefficients()[0] + " and a length of " + getCoefficients()[1] + ".\n" +
-                        "+-------------+\n" +
-                        "|             |\n" +
-                        "|             |\n" +
-                        "+-------------+  ";
+                question = "Find the perimeter of a rectangle with a width of " + getCoefficients()[0] + " and a length of " + getCoefficients()[1] + ".";
                 answer = new double[] {(2.0 * getCoefficients()[0]) + (2.0 * getCoefficients()[1])};
                 this.setAnswerFields(new String[] {"P = "});
                 break;
             }
             case "Rectangle Area" : {
                 this.setCoefficients(2);
-                question = "Find the area of a rectangle with a width of " + getCoefficients()[0] + " and a length of " + getCoefficients()[1] + ".\n" +
-                        "+-------------+\n" +
-                        "|             |\n" +
-                        "|             |\n" +
-                        "+-------------+  ";
+                question = "Find the area of a rectangle with a width of " + getCoefficients()[0] + " and a length of " + getCoefficients()[1] + ".";
                 answer = new double[] {(double)getCoefficients()[0] * getCoefficients()[1]};
                 this.setAnswerFields(new String[] {"A = "});
                 break;
             }
             case "Triangle Area" : {
                 this.setCoefficients(2);
-                question = "Find the area of a triangle with a base of " + getCoefficients()[0] + " and a height of " + getCoefficients()[1] + ".\n" +
-                        "     ^      \n" +
-                        "    / \\     \n" +
-                        "   /   \\    \n" +
-                        "  /     \\   \n" +
-                        " /       \\  \n" +
-                        "+---------+    ";
+                question = "Find the area of a triangle with a base of " + getCoefficients()[0] + " and a height of " + getCoefficients()[1] + ".";
                 answer = new double[] {(0.5 * getCoefficients()[0] * getCoefficients()[1])};
                 this.setAnswerFields(new String[] {"A = "});
                 break;
             }
             case "Circle Circumference" : {
                 this.setCoefficients(1);
-                question = "Find the circumference of a circle with a radius of " + getCoefficients()[0] + ".\n" +
-                        "    *  *     \n" +
-                        " *        *  \n" +
-                        "*          * \n" +
-                        "*          * \n" +
-                        " *        *  \n" +
-                        "    *  *       ";
+                question = "Find the circumference of a circle with a radius of " + getCoefficients()[0] + ".";
                 answer = new double[] {(Math.PI * 2 * getCoefficients()[0])};
                 this.setAnswerFields(new String[] {"C = "});
                 break;
             }
             case "Circle Area" : {
                 this.setCoefficients(1);
-                question = "Find the area of a circle with a diameter of " + getCoefficients()[0] + ".\n" +
-                        "    *  *     \n" +
-                        " *        *  \n" +
-                        "*          * \n" +
-                        "*          * \n" +
-                        " *        *  \n" +
-                        "    *  *       ";
+                question = "Find the area of a circle with a diameter of " + getCoefficients()[0] + ".";
                 answer = new double[] {(Math.PI * (0.5 * getCoefficients()[0]) * (0.5 * getCoefficients()[0]))};
                 this.setAnswerFields(new String[] {"A = "});
                 break;
