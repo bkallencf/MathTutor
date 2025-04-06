@@ -2,6 +2,7 @@ package src;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,18 +14,29 @@ public class Main {
     }
 
     public static void controlTutoringProgramGUI() {
-        //Asks the user for how many and what kinds of questions they want to answer and creates the questions
-        int[] numQuestions = getNumQuestions();
-        ArrayList<Problem> problems = createProblems(numQuestions);
+        CountDownLatch latch = new CountDownLatch(1);
 
-        //Displays each problem and gets the user's answers
-        GUI[] guiProblems = new GUI[problems.size()];
-        for (int i = 0; i < problems.size(); i++) {
-            guiProblems[i] = new GUI(problems.get(i));
-            //TODO wait for the user to hit next
+        //Asks the user for how many and what kinds of questions they want to answer and creates the questions
+        GUI questionGUI = new GUI(latch);
+
+        //Waits for the user to submit input to the GUI
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        // GUI gui = new GUI(problems.get(0));
+        int[] numQuestions = questionGUI.getValues();
+        ArrayList<Problem> problems = createProblems(numQuestions);
+
+        // //Displays each problem and gets the user's answers
+        // GUI[] guiProblems = new GUI[problems.size()];
+        // for (int i = 0; i < problems.size(); i++) {
+        //     guiProblems[i] = new GUI(problems.get(i));
+            
+        // }
+
+        GUI gui = new GUI(problems.get(0));
     }
 
     public static void controlTutoringProgram() {

@@ -21,6 +21,7 @@ Geometry Topics:
 
 Calculus Topics:  
     Power Rule: nx^(n - 1)  
+    Antiderivative Power Rule: x^(n + 1)/(n + 1)
 
 Areas to Improve:  
     Creating More Template Problems   

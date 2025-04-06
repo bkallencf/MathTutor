@@ -169,10 +169,10 @@ public class CalculusProblem extends Problem {
             case 0 : return "";
             case 1 : return "";
             case 2 : return "\u00b2";
-            case 3 : return "^3"; //"\u00b3";
-            case 4 : return "^4"; //"\u2074";
-            case 5 : return "^5"; //"\u2075";
-            case 6 : return "^6"; //"\u2076";
+            case 3 : return "\u00b3";
+            case 4 : return "\u2074";
+            case 5 : return "\u2075";
+            case 6 : return "\u2076";
             default : {
                 System.out.println("Error, power is out of range");
                 return "";
