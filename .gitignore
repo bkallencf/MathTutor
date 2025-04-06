@@ -28,3 +28,7 @@ replay_pid*
 
 # .json
 *.json
+
+# Python
+__pycache__/
+*.pyc

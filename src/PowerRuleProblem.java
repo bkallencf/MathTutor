@@ -37,7 +37,7 @@ public class PowerRuleProblem {
         this.calculusProblem.setAnswerFields(new String[] {"d/dx = "});
 
         //If the polynomial is just a constant with no other terms, it sets the answer to 0
-        if (this.polynomial[0][0] == 0) {
+        if (this.polynomial[polynomial.length - 1][0] == 0) {
             this.calculusProblem.setGeneralEquation("0");
             this.calculusProblem.setAnswer(new double[] {0});
             return;

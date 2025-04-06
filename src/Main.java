@@ -5,26 +5,28 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // ArrayList<Problem> p = createProblems(new int[] {5, 5, 4});
-
-        // for (int i = 0; i < p.size(); i++) {
-        //     for (int j = 0; j < p.get(i).getAnswer().length; j++) {
-        //         p.get(i).setUserAnswer(j, 5);
-        //     }
-        //     System.out.println(p.get(i));
-        // }
 
         controlTutoringProgram();
+
     }
 
     public static void controlTutoringProgram() {
         //Asks the user for how many and what kinds of questions they want to answer and creates the questions
-        int[] numQuestions = getNumQuestions();
-        ArrayList<Problem> problems = createProblems(numQuestions);
+        // int[] numQuestions = getNumQuestions();
+        // ArrayList<Problem> problems = createProblems(numQuestions);
 
-        //Displays each problem and gets the user's answers
+        // //Displays each problem and gets the user's answers
+        // for (int i = 0; i < problems.size(); i++) {
+        //     getAnswerInputs(problems.get(i));
+        // }
+
+        ArrayList<Problem> problems = createProblems(new int[] {20, 20, 20});
+
         for (int i = 0; i < problems.size(); i++) {
-            getAnswerInputs(problems.get(i));
+            for (int j = 0; j < problems.get(i).getAnswer().length; j++) {
+                problems.get(i).setUserAnswer(j, 5);
+            }
+            System.out.println(problems.get(i));
         }
 
         //Compares the answers to each other and returns the wrong ones

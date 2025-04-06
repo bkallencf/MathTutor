@@ -22,15 +22,14 @@ Geometry Topics:
 Calculus Topics:  
     Power Rule: nx^(n - 1)  
 
-Areas to Improve:     
-    Creating More Template Problems  
-    Let User Communicate with Gemini  
+Areas to Improve:  
+    Creating More Template Problems   
     Better UI  
     Better implementation of PowerRuleProblem  
     Gathering Answer Inputs  
     Fractions?  
     Negative exponents for power rule?  
-    JSON memory creation and format
+    JSON memory creation and format  
 
 Bugs:  
     Theta in GeometryProblem and superscript characters in CalculusProblem don't display correctly  

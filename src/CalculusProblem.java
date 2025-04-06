@@ -32,6 +32,13 @@ public class CalculusProblem extends Problem {
         }
     }
 
+    public void setNewEvaluationPoints(int evaluationPoints) {
+        this.evaluationPoints = new ArrayList<>(evaluationPoints);
+        for (int i = 0; i < evaluationPoints; i++) {
+            this.evaluationPoints.add((int)(Math.random() * 5) + 1);
+        }
+    }
+
     public void setGeneralEquation(String generalEquation) {
         this.generalEquation = generalEquation;
     }
@@ -52,7 +59,7 @@ public class CalculusProblem extends Problem {
             // "Trig Derivatives",
             // "Maxima/Minima",
             // "Higher Derivatives",
-            // "Integral Power Rule",
+            "Integral Power Rule",
             // "U-Substitution",
             // "Integration By Parts",
             // "Partial Fraction Decomposition",
@@ -73,6 +80,10 @@ public class CalculusProblem extends Problem {
         switch(problemType) {
             case "Power Rule" : {
                 new PowerRuleProblem(this, createPolynomial());
+                break;
+            }
+            case "Integral Power Rule" : {
+                new PowerIntegralProblem(this, createPolynomial());
                 break;
             }
         }
@@ -107,17 +118,47 @@ public class CalculusProblem extends Problem {
     public static String turnPolynomialIntoString(int[][] polynomial) {
         String stringPolynomial = "";
 
-        for (int i = polynomial.length - 1; i >= 0; i--) {
-            stringPolynomial += polynomial[i][1];
+        int count = polynomial.length - 1;
+        while (polynomial[count][1] == 0 && count >= 0) {
+            count--;
+        }
+        stringPolynomial += polynomial[count][1];
+        if (polynomial[count][0] != 0) {
+            stringPolynomial += "x" + convertToSuperscript(polynomial[count][0]);
+        }
+
+        for (int i = count - 1; i >= 0; i--) {
+            if (polynomial[i][1] == 0) {
+                continue;
+            }
+            stringPolynomial += " + " + polynomial[i][1];
 
             if (polynomial[i][0] != 0) {
                 stringPolynomial += "x" + convertToSuperscript(polynomial[i][0]);
             }
+        }
 
-            if (i != 0) {
-                stringPolynomial += " + ";
+        return stringPolynomial;
+    }
+
+    //Turns a polynomial into a String
+    public static String turnIntegralPolynomialIntoString(double[][] polynomial) {
+        String stringPolynomial = "";
+
+        //Returns 0 if the polynomial is just a zero
+        if (polynomial[polynomial.length - 1][0] == 0) {
+            stringPolynomial += polynomial[polynomial.length - 1][1];
+            return stringPolynomial;
+        }
+
+        for (int i = polynomial.length - 1; i >= 0; i--) {
+            stringPolynomial += polynomial[i][1];
+
+            if (polynomial[i][0] != 0) {
+                stringPolynomial += "x" + convertToSuperscript((int)polynomial[i][0]) + " + ";
             }
         }
+        stringPolynomial += "C";
 
         return stringPolynomial;
     }
@@ -128,9 +169,10 @@ public class CalculusProblem extends Problem {
             case 0 : return "";
             case 1 : return "";
             case 2 : return "\u00b2";
-            case 3 : return "\u00b3";
-            case 4 : return "\u2074";
-            case 5 : return "\u2075";
+            case 3 : return "^3"; //"\u00b3";
+            case 4 : return "^4"; //"\u2074";
+            case 5 : return "^5"; //"\u2075";
+            case 6 : return "^6"; //"\u2076";
             default : {
                 System.out.println("Error, power is out of range");
                 return "";
