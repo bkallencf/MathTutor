@@ -6,28 +6,45 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
-        controlTutoringProgram();
+        // controlTutoringProgram();
 
+        controlTutoringProgramGUI();
+
+    }
+
+    public static void controlTutoringProgramGUI() {
+        //Asks the user for how many and what kinds of questions they want to answer and creates the questions
+        int[] numQuestions = getNumQuestions();
+        ArrayList<Problem> problems = createProblems(numQuestions);
+
+        //Displays each problem and gets the user's answers
+        GUI[] guiProblems = new GUI[problems.size()];
+        for (int i = 0; i < problems.size(); i++) {
+            guiProblems[i] = new GUI(problems.get(i));
+            //TODO wait for the user to hit next
+        }
+
+        // GUI gui = new GUI(problems.get(0));
     }
 
     public static void controlTutoringProgram() {
         //Asks the user for how many and what kinds of questions they want to answer and creates the questions
-        // int[] numQuestions = getNumQuestions();
-        // ArrayList<Problem> problems = createProblems(numQuestions);
+        int[] numQuestions = getNumQuestions();
+        ArrayList<Problem> problems = createProblems(numQuestions);
 
         // //Displays each problem and gets the user's answers
-        // for (int i = 0; i < problems.size(); i++) {
-        //     getAnswerInputs(problems.get(i));
-        // }
-
-        ArrayList<Problem> problems = createProblems(new int[] {20, 20, 20});
-
         for (int i = 0; i < problems.size(); i++) {
-            for (int j = 0; j < problems.get(i).getAnswer().length; j++) {
-                problems.get(i).setUserAnswer(j, 5);
-            }
-            System.out.println(problems.get(i));
+            getAnswerInputs(problems.get(i));
         }
+
+        // ArrayList<Problem> problems = createProblems(new int[] {20, 20, 20});
+
+        // for (int i = 0; i < problems.size(); i++) {
+        //     for (int j = 0; j < problems.get(i).getAnswer().length; j++) {
+        //         problems.get(i).setUserAnswer(j, 5);
+        //     }
+        //     System.out.println(problems.get(i));
+        // }
 
         //Compares the answers to each other and returns the wrong ones
         ArrayList<Problem> wrongProblems = compareWrongAnswers(problems);
