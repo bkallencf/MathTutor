@@ -1,3 +1,6 @@
+# IMPORTANT: DO NOT COMMIT GEMINI API KEY
+*.env
+
 # Compiled class file
 *.class
 
@@ -23,12 +26,16 @@
 hs_err_pid*
 replay_pid*
 
-# IMPORTANT: DO NOT COMMIT GEMINI API KEY
-*.env
-
 # .json
 *.json
 
 # Python
 __pycache__/
 *.pyc
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+venv/
+.venv/
