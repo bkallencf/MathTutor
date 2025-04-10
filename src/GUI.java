@@ -37,7 +37,6 @@ public class GUI {
         for (int i = 0; i < this.answerFieldLabels.length; i++) {
             this.answerFieldLabels[i] = new JLabel(questions[i]);
             this.answerFieldLabels[i].setFont(new Font("Sans-Serif", Font.PLAIN, 18));
-            this.answerFieldLabels[i].setMaximumSize(new Dimension(400, 30));
             this.answerFieldLabels[i].setAlignmentX(Component.CENTER_ALIGNMENT);
         }
 
@@ -139,7 +138,7 @@ public class GUI {
         this.panel.add(scrollPane);
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30)); // padding to match
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30));
         this.nextButton = new JButton("Next");
         this.nextButton.setEnabled(false);
         bottomPanel.add(this.nextButton);
@@ -151,7 +150,6 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getGeminiFeedback();
-                talkToGemini();
             }
         });
 
@@ -184,6 +182,8 @@ public class GUI {
 
             String geminiPrompt = convertWrongAnswerToString(this.currentProblem);
             geminiFeedback.setText(JavaToPython.getGeminiResponse(geminiPrompt));
+
+            talkToGemini();
         }
         catch (NumberFormatException e) {
             geminiFeedback.setText("Please enter a valid number.");
@@ -226,18 +226,22 @@ public class GUI {
     //Allows the user to talk to gemini
     private void talkToGemini() {
         if (this.userResponse == null) {
+            JLabel userResponseLabel = new JLabel("Use the box below to talk to Gemini");
+            userResponseLabel.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
+            userResponseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            this.panel.add(userResponseLabel);
+
             this.userResponse = new JTextField(20);
             this.userResponse.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
             this.userResponse.setMaximumSize(new Dimension(400, 30));
             this.userResponse.setAlignmentX(Component.CENTER_ALIGNMENT);
-            this.panel.add(Box.createRigidArea(new Dimension(400, 30)));
+            this.panel.add(Box.createRigidArea(new Dimension(400, 10)));
             this.panel.add(this.userResponse);
 
             //Updates the panel
             this.panel.revalidate();
             this.panel.repaint();
         }
-        this.geminiFeedback.append("\n\nUse the box below and click the submit button to ask Gemini questions.");
         this.submitButton.setEnabled(true);
 
         //Removes the old event listener for submitButton

@@ -62,5 +62,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Failed to write log file: {e}")
     
-    print("Generated Response: ")
     print(safe_response)
